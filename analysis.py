@@ -20,6 +20,7 @@ def tokenize_text(textfile):
         s = word_tokenize(sent)
         full_text.append(s)
 
+    print(full_text.similar('Hermoine'))
     return full_text
 
 def classify_words(tokens):
