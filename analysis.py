@@ -1,4 +1,4 @@
-from nltk import pos_tag, sent_tokenize, word_tokenize
+from nltk import pos_tag, sent_tokenize, Text, word_tokenize
 
 # determine who the dialog is spoken by (character name/gender)
 # check if there is an adjective associated with their speech
@@ -20,18 +20,20 @@ def tokenize_text(textfile):
         s = word_tokenize(sent)
         full_text.append(s)
 
-    print(full_text.similar('Hermoine'))
+
     return full_text
 
-def classify_words(tokens):
+def classify_words(full_text):
     """
+    Applies NLTK's word classifier to identify parts of speech and returns a list
+    of sentences, each a list of tuples where the tuples are classified words.
     """
+    classified_list = []
     for sent in full_text:
         # list of tuples that look like this ('summer', 'NN'), ("''", "''")
         tagged_text = pos_tag(sent)
-
-        print(tagged_text)
+        classified_list.append(tagged_text)
+    return classified_list
 
 full_text = tokenize_text('corpus/hp1.txt')
-print(full_text)
-classify_words(full_text)
+classified_list = classify_words(full_text)
