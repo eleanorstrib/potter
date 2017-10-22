@@ -35,5 +35,11 @@ def classify_words(full_text):
         classified_list.append(tagged_text)
     return classified_list
 
+def find_character(classified_list, character):
+    for s in classified_list:
+        if 'bossy' in s:
+            print(s)
+
+
 full_text = tokenize_text('corpus/hp1.txt')
-classified_list = classify_words(full_text)
+find_character(full_text, 'Hermione')
