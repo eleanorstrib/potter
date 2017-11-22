@@ -33,11 +33,16 @@ def classify_words(sentence):
     tagged_text = pos_tag(sentence)
     return tagged_text
 
-def find_adjectives(tagged_list):
-    for s in tagged_list:
-        s_adj = [val for val in s if val[1]=='ADJ']
-    print(s_adj)
-    return s_adj
+def find_character(full_text, char):
+    char_s = []
+    for s in full_text:
+        if char in s:
+            char_s.append(s)
+    print(char_s)
+    print(len(char_s))
+    return char_s
+
+
 
 def s_word_detector(w, classified_list):
     """
@@ -57,9 +62,8 @@ def s_word_detector(w, classified_list):
 
 
 
-
-
 full_text = tokenize_text('corpus/hp1.txt')
+find_character(full_text, "Hermoine")
 classified = [classify_words(s) for s in full_text]
 
 # s_sexist_words = s_word_detector(w, full_text)
