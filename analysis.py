@@ -33,25 +33,33 @@ def classify_words(sentence):
     tagged_text = pos_tag(sentence)
     return tagged_text
 
+def find_adjectives(tagged_list):
+    for s in tagged_list:
+        s_adj = [val for val in s if val[1]=='ADJ']
+    print(s_adj)
+    return s_adj
 
-def find_character(w, classified_list, character):
+def s_word_detector(w, classified_list):
+    """
+    Returns a list of sentences that contain the sexist words.
+    """
     s_words = list(w.keys())
-    count = 0
+    s_word_sentences = []
     for s in classified_list:
         word_in_s = any(w in s for w in s_words)
         if word_in_s == True:
-            count+=1
-    print(count)
-    print(len(classified_list))
-    #     for word in s_words:
-    #         if word in s:
-    #             found_word = word
-    #             found_index = s.index(word)
-    #             print(s)
+            s_word_sentences.append(s)
 
-        #     print(c)
+    s_word_tagged = [classify_words(sent) for sent in s_word_sentences]
+    adj_list = find_adjectives(s_word_tagged)
+    print(adj_list)
+    return adj_list
+
+
 
 
 
 full_text = tokenize_text('corpus/hp1.txt')
-find_character(w, full_text, 'Hermione')
+classified = [classify_words(s) for s in full_text]
+
+# s_sexist_words = s_word_detector(w, full_text)
