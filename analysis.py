@@ -38,11 +38,21 @@ def find_character(full_text, char):
     for s in full_text:
         if char in s:
             char_s.append(s)
-    print(char_s)
-    print(len(char_s))
     return char_s
 
+def char_plus_three(char, classified):
+    plus_two = []
+    for s in classified:
+        if (char, 'NNP') in s:
+            char_index = s.index((char, 'NNP'))
+            plus_two.append([s[char_index : char_index + 3]])
+    return plus_two
 
+def char_prox(char, classified):
+    for s in classified:
+        for item in s:
+            if item[1] == 'JJ':
+                print(item)
 
 def s_word_detector(w, classified_list):
     """
@@ -63,7 +73,8 @@ def s_word_detector(w, classified_list):
 
 
 full_text = tokenize_text('corpus/hp1.txt')
-find_character(full_text, "Hermoine")
-classified = [classify_words(s) for s in full_text]
-
+character_sentences = find_character(full_text, 'Hermione')
+classified = [classify_words(s) for s in character_sentences]
+c2 = char_plus_three('Hermione', classified)
+print(c2)
 # s_sexist_words = s_word_detector(w, full_text)

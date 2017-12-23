@@ -1,6 +1,6 @@
 # adapted from http://sacraparental.com/2016/05/14/everyday-misogyny-122-subtly-sexist-words-women/
 
-sexist_words ={ 
+sexist_words ={
     'bossy': {'type': 'assertiveness'},
     'abrasive': {'type': 'assertiveness'},
     'ball-buster': {'type': 'assertiveness'},
@@ -78,3 +78,5 @@ sexist_words ={
     'warm': {'type': 'praise'},
     'helpful': {'type': 'praise'}
 }
+
+print(sexist_words.keys())
