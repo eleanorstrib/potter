@@ -45,7 +45,9 @@ def char_plus_three(char, classified):
     for s in classified:
         if (char, 'NNP') in s:
             char_index = s.index((char, 'NNP'))
-            plus_two.append([s[char_index : char_index + 3]])
+            if s[char_index -1] != ('Aunt', 'NNP'):
+                plus_two.append([s[char_index -2 : char_index + 3]])
+                print(len(plus_two))
     return plus_two
 
 def char_prox(char, classified):
@@ -73,8 +75,8 @@ def s_word_detector(w, classified_list):
 
 
 full_text = tokenize_text('corpus/hp1.txt')
-character_sentences = find_character(full_text, 'Hermione')
+character_sentences = find_character(full_text, 'Petunia')
 classified = [classify_words(s) for s in character_sentences]
-c2 = char_plus_three('Hermione', classified)
+c2 = char_plus_three('Petunia', classified)
 print(c2)
 # s_sexist_words = s_word_detector(w, full_text)
