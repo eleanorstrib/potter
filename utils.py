@@ -1,5 +1,7 @@
+import csv
 import string
 from nltk import pos_tag, Text, word_tokenize, sent_tokenize
+from nltk.stem import WordNetLemmatizer
 from collections import Counter
 
 sp = string.punctuation + '``' + '...' + "--" + "''" + '‘' + '’'
@@ -67,8 +69,8 @@ def find_dialog(full_dict):
     #         while
 
 
-def read_text():
-    with open('corpus/hp1.txt', 'r') as f:
+def read_text(num):
+    with open('corpus/hp' + str(num) + '.txt', 'r') as f:
         book = f.read()
     f.close()
     return book
@@ -89,17 +91,27 @@ def tagging(tokenize):
             else:
                 proper_nouns.append(tag[i][0].lower())
         i+=1 # increment the i counter
-    return set(proper_nouns)
+    return proper_nouns
 
 def summarize_text(proper_nouns):
     counts = Counter(proper_nouns)
     return counts
 
-a = read_text()
-b = text_tokenize(a)
-c = tagging(b)
-d = summarize_text(c)
-print(c)
+def create_csv(nouns_count):
+    nc = dict(nouns_count)
+    for i in range(1, 8):
+        with open('hp' + str(i) + '.csv', 'w', newline='') as csvfile:
+            writer = csv.writer(csvfile, delimiter=',',
+                                quoting=csv.QUOTE_MINIMAL)
+            for k, v in nc.items():
+                writer.writerow([k, v])
+
+for i in range(1,8):
+    a = read_text(i)
+    b = text_tokenize(a)
+    c = tagging(b)
+    d = summarize_text(c)
+    e = create_csv(d)
 # tokenized = tokenize_punct()
 # dialog_found = find_dialog(tokenized)
 # name_nouns = name_nouns(tokenized, num_most_common, titles)
