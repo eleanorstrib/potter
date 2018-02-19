@@ -1,10 +1,13 @@
-import csv
+
 import string
 from nltk import pos_tag, Text, word_tokenize, sent_tokenize
 from nltk.stem import WordNetLemmatizer
 from collections import Counter
 
+from words import sexist_words as w
+
 sp = string.punctuation + '``' + '...' + "--" + "''" + '‘' + '’'
+lem = WordNetLemmatizer()
 num_most_common = 250
 titles = ['Lord', 'Mr.', 'Mrs.', 'Miss', 'Ms.', 'Professor', 'Minister',
         'Aunt', 'Uncle', 'Lady', 'Sir', 'Madame']
@@ -58,28 +61,7 @@ def name_nouns(full_dict, num_common, titles):
     print(name_sum.most_common(num_common))
     return name_sum
 
-
-def find_dialog(full_dict):
-    for s in full_dict['HP1']:
-        if s[0] == "''":
-            print(s)
-    # HP1 = pos_tag(full_dict['HP1'])
-    # for i in range(len(HP1)):
-    #     if HP1[i][0] == "''" or HP1[i][0] == '``':
-    #         while
-
-
-def read_text(num):
-    with open('corpus/hp' + str(num) + '.txt', 'r') as f:
-        book = f.read()
-    f.close()
-    return book
-
-def text_tokenize(book):
-    tokenize = word_tokenize(book)
-    return tokenize
-
-def tagging(tokenize):
+def tagging_nouns(tokenize):
     proper_nouns = []
     tag = pos_tag(tokenize)
     i = 0
@@ -93,26 +75,7 @@ def tagging(tokenize):
         i+=1 # increment the i counter
     return proper_nouns
 
-def summarize_text(proper_nouns):
-    counts = Counter(proper_nouns)
-    return counts
-
-def create_csv(nouns_count):
-    nc = dict(nouns_count)
-    for i in range(1, 8):
-        with open('hp' + str(i) + '.csv', 'w', newline='') as csvfile:
-            writer = csv.writer(csvfile, delimiter=',',
-                                quoting=csv.QUOTE_MINIMAL)
-            for k, v in nc.items():
-                writer.writerow([k, v])
-
-for i in range(1,8):
-    a = read_text(i)
-    b = text_tokenize(a)
-    c = tagging(b)
-    d = summarize_text(c)
-    e = create_csv(d)
-# tokenized = tokenize_punct()
-# dialog_found = find_dialog(tokenized)
-# name_nouns = name_nouns(tokenized, num_most_common, titles)
-# word_count = count_words(tokenized)
+def find_sexist_words(text):
+    for i in text:
+        next = lem.lemmatize(i)
+    if next in w:
